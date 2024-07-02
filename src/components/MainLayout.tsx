@@ -19,7 +19,7 @@ const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
         />
       </div>
       <div className="relative z-50">
-        <div className="max-w-[1060px] mx-auto w-full relative z-30 top-0 left-0 right-0">
+        <div className="max-w-[1060px] mx-auto w-full pb-7 relative z-30 top-0 left-0 right-0">
           {children}
         </div>
       </div>

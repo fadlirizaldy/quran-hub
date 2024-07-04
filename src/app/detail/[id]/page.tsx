@@ -52,7 +52,7 @@ const DetailSurahPage = () => {
       </div>
 
       <div className="bg-white p-4">
-        <h2 className="text-center text-3xl font-noto-naskh">
+        <h2 className="text-center text-3xl font-amiri">
           بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </h2>
 
@@ -75,7 +75,7 @@ const DetailSurahPage = () => {
                 </div>
               </div>
               <div>
-                <p className="text-xs">{item.idn}</p>
+                <p className="text-xs mt-2">{item.idn}</p>
               </div>
             </div>
           ))}

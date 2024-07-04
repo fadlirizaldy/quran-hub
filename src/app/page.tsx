@@ -131,7 +131,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xl">{item.nama}</p>
+                <p className="text-xl font-amiri">{item.nama}</p>
               </div>
             ))
         )}

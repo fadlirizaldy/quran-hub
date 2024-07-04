@@ -28,15 +28,15 @@ const BackToTop = () => {
   return (
     <div
       className={`fixed bottom-4 left-4 z-50 transition-all ${
-        isVisible
-          ? "opacity-100 cursor-pointer"
-          : "opacity-0 translate-y-3 cursor-default"
+        isVisible ? "opacity-100" : "opacity-0 translate-y-3"
       }`}
     >
       <button
         type="button"
         onClick={scrollToTop}
-        className={`bg-secondary text-white p-2 rounded-full shadow-lg hover:bg-primary focus:outline-none cursor-default`}
+        className={`bg-secondary text-white p-2 rounded-full shadow-lg hover:bg-primary focus:outline-none cursor-default ${
+          isVisible ? "cursor-pointer" : "cursor-default"
+        }`}
       >
         <Icon icon="ph:arrow-up-bold" />
       </button>

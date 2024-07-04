@@ -2,6 +2,7 @@
 import React from "react";
 import BackToTop from "./BackToTop";
 import IFrameSolat from "./IFrameSolat";
+import Footer from "./Footer";
 
 interface IPropsLayout {
   children: React.ReactNode;
@@ -25,6 +26,7 @@ const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
           {children}
         </div>
       </div>
+      <Footer />
       <BackToTop />
       <IFrameSolat />
     </div>

@@ -9,8 +9,8 @@ export interface IDataSurah {
   audio: string;
   status: boolean;
   ayat: Ayat[];
-  surat_selanjutnya: boolean;
-  surat_sebelumnya: SuratSebelumnya;
+  surat_selanjutnya: INextPrevSurah;
+  surat_sebelumnya: INextPrevSurah;
 }
 
 export interface Ayat {
@@ -22,7 +22,7 @@ export interface Ayat {
   idn: string;
 }
 
-export interface SuratSebelumnya {
+export interface INextPrevSurah {
   id: number;
   nomor: number;
   nama: string;

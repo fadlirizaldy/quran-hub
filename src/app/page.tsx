@@ -6,6 +6,7 @@ import { getAllSurah } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { IDataSurah } from "@/utils/api.interface";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function Home() {
       </h2>
 
       <div className="w-full flex flex-col items-center mt-8">
-      <div className="relative w-10/12 sm:w-1/2">
+        <div className="relative w-10/12 sm:w-1/2">
           <input
             type="text"
             placeholder="Search surah.."
@@ -51,7 +52,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-3 flex items-center gap-3 flex-wrap justify-center">
+        <div className="mt-3 w-10/12 sm:w-1/2 flex items-center gap-3 flex-wrap justify-center">
           <div
             className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${18}`)}

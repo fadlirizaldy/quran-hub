@@ -37,7 +37,7 @@ export default function Home() {
       </h2>
 
       <div className="w-full flex flex-col items-center mt-8">
-        <div className="relative w-1/2">
+      <div className="relative w-10/12 sm:w-1/2">
           <input
             type="text"
             placeholder="Search surah.."

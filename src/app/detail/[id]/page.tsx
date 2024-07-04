@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useParams, useRouter } from "next/navigation";
 
@@ -12,6 +12,7 @@ const DetailSurahPage = () => {
   const params = useParams<{ id: string }>();
   const [data, setData] = useState<IDataSurah>();
   const [loading, setLoading] = useState(true);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +26,14 @@ const DetailSurahPage = () => {
     }
     fetchData();
   }, []);
+
+  const handleScrollToItem = (index: number) => {
+    if (itemRefs.current[index]) {
+      itemRefs?.current[index - 1 < 0 ? 0 : index - 1]?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <div className="w-full md:w-4/5 mx-auto">
@@ -97,6 +106,20 @@ const DetailSurahPage = () => {
                 {data?.jumlah_ayat} Ayat
               </p>
             </div>
+
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <h5 className="text-slate-500 text-sm">Ayat</h5>
+              <select
+                className="bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm"
+                onChange={(e) => handleScrollToItem(Number(e.target.value))}
+              >
+                {data?.ayat.map((item, index) => (
+                  <option key={item.nomor} value={index}>
+                    {item.nomor}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="bg-white p-4">
@@ -105,8 +128,14 @@ const DetailSurahPage = () => {
             </h2>
 
             <section className="flex flex-col gap-16 mt-10">
-              {data?.ayat.map((item) => (
-                <div className="" key={item.nomor}>
+              {data?.ayat.map((item, index) => (
+                <div
+                  className=""
+                  key={item.nomor}
+                  ref={(el: never) =>
+                    (itemRefs.current[index] = el) as unknown as never
+                  }
+                >
                   <div className="flex items-center justify-between gap-4">
                     <div className="relative">
                       <img

@@ -34,7 +34,7 @@ const DetailSurahPage = () => {
 
       <div className="p-3 pb-6 bg-gray-100 w-full mt-10 rounded-t-lg">
         <div className="flex flex-col items-center">
-          <h2 className="font-medium text-3xl font-noto-naskh">{data?.nama}</h2>
+          <h2 className="font-medium text-3xl font-amiri">{data?.nama}</h2>
           <h2 className="text-lg mt-1">
             {data?.nama_latin}
             <span className="font-light italic">{`(${data?.arti})`}</span>
@@ -70,7 +70,7 @@ const DetailSurahPage = () => {
                     {toArabicNumber(String(item.nomor))}
                   </h4>
                 </div>
-                <div className="text-end text-3xl font-medium font-noto-naskh">
+                <div className="text-end text-3xl font-medium font-amiri">
                   {item.ar}
                 </div>
               </div>

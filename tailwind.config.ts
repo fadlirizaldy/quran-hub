@@ -26,6 +26,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Poppins"],
         "noto-naskh": ["Noto Naskh Arabic", "sans-serif"],
+        "amiri":["Amiri", "sans-serif"]
       },
     },
   },

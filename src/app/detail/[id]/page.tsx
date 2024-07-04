@@ -70,12 +70,12 @@ const DetailSurahPage = () => {
                     {toArabicNumber(String(item.nomor))}
                   </h4>
                 </div>
-                <div className="text-end text-3xl font-medium font-amiri leading-8">
+                <div className="text-end text-3xl font-medium font-amiri leading-loose">
                   {item.ar}
                 </div>
               </div>
               <div>
-                <p className="text-xs mt-2">{item.idn}</p>
+                <p className="text-sm mt-2">{item.idn}</p>
               </div>
             </div>
           ))}

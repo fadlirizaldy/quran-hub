@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import BackToTop from "./BackToTop";
+import IFrameSolat from "./IFrameSolat";
 
 interface IPropsLayout {
   children: React.ReactNode;
@@ -25,6 +26,7 @@ const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
         </div>
       </div>
       <BackToTop />
+      <IFrameSolat />
     </div>
   );
 };

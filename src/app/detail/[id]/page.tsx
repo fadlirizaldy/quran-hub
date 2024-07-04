@@ -70,7 +70,7 @@ const DetailSurahPage = () => {
                     {toArabicNumber(String(item.nomor))}
                   </h4>
                 </div>
-                <div className="text-end text-3xl font-medium font-amiri">
+                <div className="text-end text-3xl font-medium font-amiri leading-8">
                   {item.ar}
                 </div>
               </div>

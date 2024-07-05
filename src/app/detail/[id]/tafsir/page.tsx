@@ -1,18 +1,16 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 import { useParams, useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
 
-import { getDetailSurah } from "@/utils/api";
-import { IDataSurah } from "@/utils/api.interface";
+import { IDataTafsir } from "@/utils/api.interface";
+import { getDetailTafsir } from "@/utils/api";
 import { toArabicNumber } from "@/utils/formatter";
 
-const DetailSurahPage = () => {
+const TafsirPage = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
-  const [data, setData] = useState<IDataSurah>();
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [data, setData] = useState<IDataTafsir>();
   const [loading, setLoading] = useState(true);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -20,8 +18,8 @@ const DetailSurahPage = () => {
     async function fetchData() {
       setLoading(true);
       try {
-        const detailSurah = await getDetailSurah(params.id);
-        setData(detailSurah);
+        const detailTafsir = await getDetailTafsir(params.id);
+        setData(detailTafsir);
       } finally {
         setLoading(false);
       }
@@ -31,34 +29,13 @@ const DetailSurahPage = () => {
 
   const handleScrollToItem = (index: number) => {
     if (itemRefs.current[index]) {
-      itemRefs?.current[index - 1 < 0 ? 0 : index - 1]?.scrollIntoView({
+      itemRefs?.current[index]?.scrollIntoView({
         behavior: "smooth",
       });
     }
   };
-
-  const handlePlaySound = (url: string) => {
-    if (audio && isPlaying) {
-      setIsPlaying(false);
-      audio.pause();
-      return;
-    } else if (audio && !isPlaying) {
-      setIsPlaying(true);
-      audio.play();
-      return;
-    }
-    const newAudio = new Audio(url);
-    newAudio.play();
-    setAudio(newAudio);
-    setIsPlaying(true);
-
-    newAudio.onended = () => {
-      setIsPlaying(false);
-    };
-  };
-
   return (
-    <div className="w-full md:w-4/5 mx-auto">
+    <div>
       <h2
         className="text-white text-center mt-5 text-2xl cursor-pointer"
         onClick={() => router.push("/")}
@@ -130,76 +107,48 @@ const DetailSurahPage = () => {
             </div>
 
             <div className="flex items-center justify-center gap-2 mt-2">
-              <div
-                className="flex items-center cursor-pointer text-slate-500 hover:text-primary transition-all"
-                onClick={() => router.push(`/detail/${params.id}/tafsir`)}
+              <h5 className="text-slate-500 text-sm">Ayat</h5>
+              <select
+                className="bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm"
+                onChange={(e) => handleScrollToItem(Number(e.target.value))}
               >
-                <Icon
-                  icon="material-symbols-light:info-outline"
-                  className="text-lg"
-                />
-                <p className="text-sm">Tafsir</p>
-              </div>
-              <p className="text-slate-500">|</p>
-              <div className="flex items-center gap-2">
-                <h5 className="text-slate-500 text-sm">Ayat</h5>
-                <select
-                  className="bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm"
-                  onChange={(e) => handleScrollToItem(Number(e.target.value))}
-                >
-                  {data?.ayat.map((item, index) => (
-                    <option key={item.nomor} value={index}>
-                      {item.nomor}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                {data?.tafsir.map((item, index) => (
+                  <option key={item.ayat} value={index}>
+                    {item.ayat}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           <div className="bg-white p-4">
-            <h2 className="text-center text-3xl font-amiri">
-              بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-            </h2>
+            <h2 className="text-center text-3xl font-amiri">Tafsir</h2>
+            <p
+              className="text-center text-lg font-amiri"
+              dangerouslySetInnerHTML={{ __html: data?.deskripsi! }}
+            ></p>
 
-            <div className="flex items-center gap-1 mt-2">
-              <div
-                className="p-1 rounded-full border border-slate-300 cursor-pointer"
-                onClick={() => handlePlaySound(data?.audio!)}
-              >
-                <Icon
-                  icon={isPlaying ? "bi:pause-fill" : "bi:play-fill"}
-                  className="text-primary text-sm"
-                />
-              </div>
-              <p className="text-sm text-slate-500">Play Surah</p>
-            </div>
-
-            <section className="flex flex-col gap-16 mt-7">
-              {data?.ayat.map((item, index) => (
+            <section className="flex flex-col gap-16 mt-10">
+              {data?.tafsir.map((item, index) => (
                 <div
-                  key={item.nomor}
+                  className=""
+                  key={item.ayat}
                   ref={(el: never) =>
                     (itemRefs.current[index] = el) as unknown as never
                   }
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex justify-between gap-4">
                     <div className="relative">
                       <img
-                        src="../star-small.svg"
+                        src="/star-small.svg"
                         alt=""
                         className="min-w-10 w-10 h-10"
                       />
                       <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
-                        {toArabicNumber(String(item.nomor))}
+                        {toArabicNumber(String(item.ayat))}
                       </h4>
                     </div>
-                    <div className="text-end text-3xl font-medium font-amiri leading-loose">
-                      {item.ar}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm mt-2">{item.idn}</p>
+                    <div className="text-sm text-slate-500">{item.tafsir}</div>
                   </div>
                 </div>
               ))}
@@ -211,4 +160,4 @@ const DetailSurahPage = () => {
   );
 };
 
-export default DetailSurahPage;
+export default TafsirPage;

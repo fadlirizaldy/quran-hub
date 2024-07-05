@@ -13,6 +13,20 @@ export interface IDataSurah {
   surat_sebelumnya: INextPrevSurah;
 }
 
+export interface IDataTafsir {
+  nomor: number;
+  nama: string;
+  nama_latin: string;
+  jumlah_ayat: number;
+  tempat_turun: string;
+  arti: string;
+  deskripsi: string;
+  audioFull: string;
+  tafsir: Tafsir[];
+  surat_selanjutnya: INextPrevSurah;
+  surat_sebelumnya: INextPrevSurah;
+}
+
 export interface Ayat {
   id: number;
   surah: number;
@@ -20,6 +34,13 @@ export interface Ayat {
   ar: string;
   tr: string;
   idn: string;
+}
+
+export interface Tafsir {
+  id: number;
+  surah: number;
+  ayat: number;
+  tafsir: string;
 }
 
 export interface INextPrevSurah {

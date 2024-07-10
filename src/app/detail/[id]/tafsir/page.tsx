@@ -36,19 +36,13 @@ const TafsirPage = () => {
   };
   return (
     <div>
-      <h2
-        className="text-white text-center mt-5 text-2xl cursor-pointer"
-        onClick={() => router.push("/")}
-      >
+      <h2 className="text-white text-center mt-5 text-2xl cursor-pointer" onClick={() => router.push("/")}>
         <span className="font-bold">Quran</span>Hub
       </h2>
 
       {loading && data === undefined ? (
         <div className="w-full flex justify-center mt-10">
-          <svg
-            className="animate-spin h-7 w-7 mr-3 bg-secondary text-center"
-            viewBox="0 0 24 24"
-          ></svg>
+          <svg className="animate-spin h-7 w-7 mr-3 bg-secondary text-center" viewBox="0 0 24 24"></svg>
         </div>
       ) : (
         <>
@@ -56,35 +50,19 @@ const TafsirPage = () => {
             <div className="flex justify-between items-center">
               <button
                 className="flex items-center gap-1"
-                onClick={() =>
-                  router.push(
-                    data?.surat_sebelumnya
-                      ? `/detail/${data?.surat_sebelumnya?.nomor}`
-                      : "/"
-                  )
-                }
+                onClick={() => router.push(data?.surat_sebelumnya ? `/detail/${data?.surat_sebelumnya?.nomor}` : "/")}
               >
                 <Icon icon="ep:arrow-left" className="text-primary" />
                 <span className="text-sm italic">
-                  {data?.surat_sebelumnya
-                    ? data?.surat_sebelumnya.nama_latin
-                    : "Home"}
+                  {data?.surat_sebelumnya ? data?.surat_sebelumnya.nama_latin : "Home"}
                 </span>
               </button>
               <button
                 className="flex items-center gap-1"
-                onClick={() =>
-                  router.push(
-                    data?.surat_selanjutnya
-                      ? `/detail/${data?.surat_selanjutnya?.nomor}`
-                      : "/"
-                  )
-                }
+                onClick={() => router.push(data?.surat_selanjutnya ? `/detail/${data?.surat_selanjutnya?.nomor}` : "/")}
               >
                 <span className="text-sm italic">
-                  {data?.surat_selanjutnya
-                    ? data?.surat_selanjutnya.nama_latin
-                    : "Home"}
+                  {data?.surat_selanjutnya ? data?.surat_selanjutnya.nama_latin : "Home"}
                 </span>
                 <Icon icon="ep:arrow-right" className="text-primary" />
               </button>
@@ -107,6 +85,13 @@ const TafsirPage = () => {
             </div>
 
             <div className="flex items-center justify-center gap-2 mt-2">
+              <div
+                className="flex items-center gap-1 cursor-pointer text-slate-500 hover:text-primary transition-all"
+                onClick={() => router.push(`/detail/${params.id}`)}
+              >
+                <Icon icon="ion:book-outline" />
+                <p className="text-sm">Surah</p>
+              </div>
               <h5 className="text-slate-500 text-sm">Ayat</h5>
               <select
                 className="bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm"
@@ -123,27 +108,18 @@ const TafsirPage = () => {
 
           <div className="bg-white p-4">
             <h2 className="text-center text-3xl font-amiri">Tafsir</h2>
-            <p
-              className="text-center text-lg font-amiri"
-              dangerouslySetInnerHTML={{ __html: data?.deskripsi! }}
-            ></p>
+            <p className="text-center text-lg font-amiri" dangerouslySetInnerHTML={{ __html: data?.deskripsi! }}></p>
 
             <section className="flex flex-col gap-16 mt-10">
               {data?.tafsir.map((item, index) => (
                 <div
                   className=""
                   key={item.ayat}
-                  ref={(el: never) =>
-                    (itemRefs.current[index] = el) as unknown as never
-                  }
+                  ref={(el: never) => (itemRefs.current[index] = el) as unknown as never}
                 >
                   <div className="flex justify-between gap-4">
                     <div className="relative">
-                      <img
-                        src="/star-small.svg"
-                        alt=""
-                        className="min-w-10 w-10 h-10"
-                      />
+                      <img src="/star-small.svg" alt="" className="min-w-10 w-10 h-10" />
                       <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
                         {toArabicNumber(String(item.ayat))}
                       </h4>

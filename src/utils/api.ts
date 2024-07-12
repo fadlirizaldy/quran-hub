@@ -2,7 +2,7 @@ import { IDataSurah, IDataTafsir } from "./api.interface";
 
 const BASE_URL = "https://equran.id/api";
 export async function getAllSurah(): Promise<IDataSurah[]> {
-  const res = await fetch(`${BASE_URL}/surat`, { next: { revalidate: 10 }, cache: "no-store" });
+  const res = await fetch(`${BASE_URL}/surat`, { next: { revalidate: 10 } });
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

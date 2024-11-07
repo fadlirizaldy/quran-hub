@@ -54,31 +54,31 @@ export default function Home() {
 
         <div className="mt-3 w-10/12 sm:w-1/2 flex items-center gap-3 flex-wrap justify-center">
           <div
-            className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
+            className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${18}`)}
           >
             Alkahfi
           </div>
           <div
-            className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
+            className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${56}`)}
           >
             Alwaqiah
           </div>
           <div
-            className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
+            className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${36}`)}
           >
             Yaseen
           </div>
           <div
-            className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
+            className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${2}`)}
           >
             Albaqarah
           </div>
           <div
-            className="cursor-pointer bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
+            className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium"
             onClick={() => router.push(`/detail/${50}`)}
           >
             Qaf

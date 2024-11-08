@@ -6,7 +6,6 @@ import { getAllSurah } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { IDataSurah } from "@/utils/api.interface";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -102,7 +101,16 @@ export default function Home() {
             .map((item) => (
               <div
                 className="py-3 pl-3 pr-4 shadow-md cursor-pointer rounded-md bg-white flex items-center justify-between gap-3"
-                onClick={() => router.push(`/detail/${item.nomor}`)}
+                onClick={() => {
+                  localStorage.setItem(
+                    "archived",
+                    JSON.stringify({
+                      nomor: item.nomor,
+                      nama_latin: item.nama_latin,
+                    })
+                  );
+                  router.push(`/detail/${item.nomor}`);
+                }}
                 key={item.nomor}
               >
                 <div className="flex items-center gap-3">

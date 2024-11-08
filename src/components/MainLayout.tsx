@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import BackToTop from "./BackToTop";
 import IFrameSolat from "./IFrameSolat";
 import Footer from "./Footer";
+import RecentRead from "./RecentRead";
 
 interface IPropsLayout {
   children: React.ReactNode;
@@ -11,6 +13,23 @@ interface IPropsLayout {
 
 const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
   const { children, className } = props;
+  const [isDataArchived, setIsDataArchived] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Check if 'archived' data exists in localStorage and parse it if available
+    if (typeof window !== "undefined") {
+      const storedData = localStorage.getItem("archived");
+
+      if (storedData) {
+        try {
+          setIsDataArchived(true);
+        } catch (error) {
+          setIsDataArchived(false);
+        }
+      }
+    }
+  }, []);
+
   return (
     <div className={`relative min-h-screen bg-primary-gray ${className}`}>
       <div className="h-[300px] bg-primary w-full absolute z-10 -top-5 rounded-b-xl overflow-hidden">
@@ -29,6 +48,7 @@ const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
       <Footer />
       <BackToTop />
       <IFrameSolat />
+      {isDataArchived && <RecentRead />}
     </div>
   );
 };

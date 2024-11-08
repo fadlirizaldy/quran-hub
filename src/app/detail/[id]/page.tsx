@@ -14,6 +14,7 @@ const DetailSurahPage = () => {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
+  // const [lastAyat, setLastAyat] = useState<number | undefined>();
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const pathname = usePathname();
@@ -168,7 +169,7 @@ const DetailSurahPage = () => {
               بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
             </h2>
 
-            <div className="flex items-center gap-1 mt-2">
+            <div className="flex items-center gap-1 mt-4">
               <div
                 className="p-1 rounded-full border border-slate-300 cursor-pointer"
                 onClick={() => handlePlaySound(data?.audio!)}

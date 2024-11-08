@@ -88,10 +88,12 @@ export default function Home() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-4 px-4">
         {loading ? (
-          <svg
-            className="animate-spin h-5 w-5 mr-3 bg-secondary text-center"
-            viewBox="0 0 24 24"
-          ></svg>
+          <div className="w-full flex justify-center mt-5">
+            <svg
+              className="animate-spin h-5 w-5 mr-3 bg-secondary text-center"
+              viewBox="0 0 24 24"
+            ></svg>
+          </div>
         ) : (
           data
             ?.filter((item) =>
@@ -100,7 +102,9 @@ export default function Home() {
             .map((item) => (
               <div
                 className="py-3 pl-3 pr-4 shadow-md cursor-pointer rounded-md bg-white flex items-center justify-between gap-3"
-                onClick={() => router.push(`/detail/${item.nomor}`)}
+                onClick={() =>
+                  router.push(`/detail/${item.nomor}`, { scroll: false })
+                }
                 key={item.nomor}
               >
                 <div className="flex items-center gap-3">

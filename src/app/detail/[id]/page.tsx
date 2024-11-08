@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { getDetailSurah } from "@/utils/api";
 import { IDataSurah } from "@/utils/api.interface";
@@ -15,6 +15,12 @@ const DetailSurahPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     async function fetchData() {

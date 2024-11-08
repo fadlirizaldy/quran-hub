@@ -139,7 +139,7 @@ const TafsirPage = () => {
             <section className="flex flex-col gap-16 mt-10">
               {data?.tafsir.map((item, index) => (
                 <div
-                  className=""
+                  className="scroll-mt-10"
                   key={item.ayat}
                   ref={(el: never) =>
                     (itemRefs.current[index] = el) as unknown as never

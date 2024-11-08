@@ -37,7 +37,7 @@ const DetailSurahPage = () => {
 
   const handleScrollToItem = (index: number) => {
     if (itemRefs.current[index]) {
-      itemRefs?.current[index - 1 < 0 ? 0 : index - 1]?.scrollIntoView({
+      itemRefs?.current[index].scrollIntoView({
         behavior: "smooth",
       });
     }
@@ -188,6 +188,7 @@ const DetailSurahPage = () => {
                   ref={(el: never) =>
                     (itemRefs.current[index] = el) as unknown as never
                   }
+                  className="scroll-mt-10"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="relative">

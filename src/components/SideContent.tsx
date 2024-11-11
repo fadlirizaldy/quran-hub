@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import IFrameSolat from "./IFrameSolat";
 import RecentRead from "./RecentRead";
+import { useDataContext } from "@/context/DataArchivedContext";
 
 export interface IVisible {
   solatSchedule: boolean;
@@ -8,14 +9,10 @@ export interface IVisible {
 }
 
 const SideContent = () => {
-  const [isDataArchived, setIsDataArchived] = useState<boolean>(false);
-  const [isVisible, setIsVisible] = useState<IVisible>({
-    solatSchedule: false,
-    archived: false,
-  });
+  const { data } = useDataContext();
+  const [isDataArchived, setIsDataArchived] = useState(false);
 
   useEffect(() => {
-    // Check if 'archived' data exists in localStorage and parse it if available
     if (typeof window !== "undefined") {
       const storedData = localStorage.getItem("archived");
 
@@ -27,7 +24,12 @@ const SideContent = () => {
         }
       }
     }
-  }, []);
+  }, [data]);
+
+  const [isVisible, setIsVisible] = useState<IVisible>({
+    solatSchedule: false,
+    archived: false,
+  });
 
   return (
     <div>

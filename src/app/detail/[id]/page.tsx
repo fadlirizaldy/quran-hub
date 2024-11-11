@@ -1,20 +1,33 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import { getDetailSurah } from "@/utils/api";
 import { IDataSurah } from "@/utils/api.interface";
 import { toArabicNumber } from "@/utils/formatter";
+import { useDataContext } from "@/context/DataArchivedContext";
+import { toast } from "react-toastify";
 
 const DetailSurahPage = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const ayat = searchParams.get("ayat");
+
+  const { setData: setDataArchived } = useDataContext(); // Access data and setData from context
+
   const [data, setData] = useState<IDataSurah>();
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const [lastAyat, setLastAyat] = useState<number | undefined>();
+  const [error, setError] = useState(false);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const pathname = usePathname();
@@ -28,6 +41,10 @@ const DetailSurahPage = () => {
       setLoading(true);
       try {
         const detailSurah = await getDetailSurah(params.id);
+        if (!detailSurah) {
+          setError(true);
+          return;
+        }
         setData(detailSurah);
       } finally {
         setLoading(false);
@@ -35,6 +52,17 @@ const DetailSurahPage = () => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (ayat && data) {
+      const ayatIndex = data.ayat.findIndex(
+        (item) => item.nomor === Number(ayat)
+      );
+      if (ayatIndex !== -1) {
+        handleScrollToItem(ayatIndex);
+      }
+    }
+  }, [ayat, data]);
 
   const handleScrollToItem = (index: number) => {
     if (itemRefs.current[index]) {
@@ -63,6 +91,22 @@ const DetailSurahPage = () => {
       setIsPlaying(false);
     };
   };
+
+  if (error) {
+    return (
+      <>
+        <div className="w-full md:w-4/5 mx-auto">
+          <h2
+            className="text-white text-center mt-5 text-2xl cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            <span className="font-bold">Quran</span>Hub
+          </h2>
+        </div>
+        <h2 className="text-center mt-10">Ops! surat tidak ditemukan</h2>
+      </>
+    );
+  }
 
   return (
     <div className="w-full md:w-4/5 mx-auto">
@@ -191,19 +235,46 @@ const DetailSurahPage = () => {
                   }
                   className="scroll-mt-10"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="relative">
-                      <img
-                        src="../star-small.svg"
-                        alt=""
-                        className="min-w-10 w-10 h-10"
+                  <div className="flex justify-between gap-3">
+                    <div>
+                      <Icon
+                        icon="stash:save-ribbon-duotone"
+                        className="text-lg text-slate-300 cursor-pointer opacity-60 hover:opacity-100 transition-all"
+                        onClick={() => {
+                          localStorage.setItem(
+                            "archived",
+                            JSON.stringify({
+                              nomor: data.nomor,
+                              nama_latin: data.nama_latin,
+                              ayat: item.nomor,
+                            })
+                          );
+
+                          toast.info(
+                            `Surah ${data.nama_latin} ayat ${item.nomor} tersimpan`
+                          );
+                          setDataArchived({
+                            nomor: data.nomor,
+                            nama_latin: data.nama_latin,
+                            ayat: item.nomor,
+                          });
+                        }}
                       />
-                      <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
-                        {toArabicNumber(String(item.nomor))}
-                      </h4>
                     </div>
-                    <div className="text-end text-3xl font-medium font-amiri leading-loose">
-                      {item.ar}
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <img
+                          src="../star-small.svg"
+                          alt=""
+                          className="min-w-10 w-10 h-10"
+                        />
+                        <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
+                          {toArabicNumber(String(item.nomor))}
+                        </h4>
+                      </div>
+                      <div className="text-end text-3xl font-medium font-amiri leading-loose">
+                        {item.ar}
+                      </div>
                     </div>
                   </div>
                   <div>

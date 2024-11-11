@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+import { IVisible } from "./SideContent";
 
-const IFrameSolat = () => {
-  const [isVisible, setIsVisible] = useState(false);
+interface IFrameSolatProps {
+  isVisible: IVisible;
+  setIsVisible: React.Dispatch<React.SetStateAction<IVisible>>;
+}
+
+const IFrameSolat = ({ isVisible, setIsVisible }: IFrameSolatProps) => {
   return (
     <div
       className={`fixed top-1/4 z-[60] flex transition-all ${
-        isVisible ? "left-0" : "-left-[182px]"
+        isVisible.solatSchedule ? "left-0" : "-left-[182px]"
       }`}
     >
       <iframe
@@ -18,7 +23,12 @@ const IFrameSolat = () => {
       </iframe>
       <div
         className="w-10 h-10 bg-secondary cursor-pointer rounded-r-lg flex justify-center items-center"
-        onClick={() => setIsVisible((prev) => !prev)}
+        onClick={() =>
+          setIsVisible((prev) => ({
+            archived: false,
+            solatSchedule: !prev.solatSchedule,
+          }))
+        }
       >
         <Icon
           icon="fluent:building-mosque-24-filled"

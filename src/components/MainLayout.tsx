@@ -5,6 +5,7 @@ import BackToTop from "./BackToTop";
 import IFrameSolat from "./IFrameSolat";
 import Footer from "./Footer";
 import RecentRead from "./RecentRead";
+import SideContent from "./SideContent";
 
 interface IPropsLayout {
   children: React.ReactNode;
@@ -13,22 +14,6 @@ interface IPropsLayout {
 
 const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
   const { children, className } = props;
-  const [isDataArchived, setIsDataArchived] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Check if 'archived' data exists in localStorage and parse it if available
-    if (typeof window !== "undefined") {
-      const storedData = localStorage.getItem("archived");
-
-      if (storedData) {
-        try {
-          setIsDataArchived(true);
-        } catch (error) {
-          setIsDataArchived(false);
-        }
-      }
-    }
-  }, []);
 
   return (
     <div className={`relative min-h-screen bg-primary-gray ${className}`}>
@@ -47,8 +32,8 @@ const MainLayout: React.FC<IPropsLayout> = (props: IPropsLayout) => {
       </div>
       <Footer />
       <BackToTop />
-      <IFrameSolat />
-      {isDataArchived && <RecentRead />}
+
+      <SideContent />
     </div>
   );
 };

@@ -102,13 +102,6 @@ export default function Home() {
               <div
                 className="py-3 pl-3 pr-4 shadow-md cursor-pointer rounded-md bg-white flex items-center justify-between gap-3"
                 onClick={() => {
-                  localStorage.setItem(
-                    "archived",
-                    JSON.stringify({
-                      nomor: item.nomor,
-                      nama_latin: item.nama_latin,
-                    })
-                  );
                   router.push(`/detail/${item.nomor}`);
                 }}
                 key={item.nomor}

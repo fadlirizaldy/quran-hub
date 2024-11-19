@@ -251,7 +251,8 @@ const DetailSurahPage = () => {
                           );
 
                           toast.info(
-                            `Surah ${data.nama_latin} ayat ${item.nomor} tersimpan`
+                            `Surah ${data.nama_latin} ayat ${item.nomor} tersimpan`,
+                            { autoClose: 2000 }
                           );
                           setDataArchived({
                             nomor: data.nomor,

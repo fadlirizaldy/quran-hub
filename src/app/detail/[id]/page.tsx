@@ -279,7 +279,9 @@ const DetailSurahPage = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm mt-2">{item.idn}</p>
+                    <p className="text-sm mt-2">
+                      {item.nomor}. {item.idn}
+                    </p>
                   </div>
                 </div>
               ))}

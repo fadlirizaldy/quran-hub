@@ -5,11 +5,11 @@ import { AyatRefsProvider } from '@/context/AyatRefsContext';
 
 const DetailLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <MainLayout>
-      <AyatRefsProvider>
+    <AyatRefsProvider>
+      <MainLayout>
         <Suspense fallback={<LoadingDetail />}>{children}</Suspense>
-      </AyatRefsProvider>
-    </MainLayout>
+      </MainLayout>
+    </AyatRefsProvider>
   );
 };
 

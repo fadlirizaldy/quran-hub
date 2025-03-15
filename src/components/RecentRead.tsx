@@ -21,9 +21,11 @@ const RecentRead = ({ isVisible, setIsVisible }: IFrameSolatProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const ayat = searchParams.get('ayat');
+  const ayatParams = searchParams.get('ayat');
 
   const { data, setData } = useDataContext(); // Access data and setData from context
+  const { handleScrollToItem } = useAyatRefs();
+
   const [width, setWidth] = useState(1000);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,8 +57,8 @@ const RecentRead = ({ isVisible, setIsVisible }: IFrameSolatProps) => {
     }));
 
     if (data && data.nomor >= 1 && data.nomor <= 114) {
-      if (pathname.startsWith('/detail') && ayat) {
-        router.refresh();
+      if (pathname.startsWith('/detail') && ayatParams) {
+        handleScrollToItem(data.ayat - 1);
       } else {
         router.push(`/detail/${data.nomor}?ayat=${data.ayat}`);
       }

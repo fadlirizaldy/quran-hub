@@ -1,25 +1,27 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
+import React, { useEffect, useRef, useState } from 'react';
+import { Icon } from '@iconify/react';
 import {
   useParams,
   usePathname,
   useRouter,
   useSearchParams,
-} from "next/navigation";
+} from 'next/navigation';
+import { toast } from 'react-toastify';
 
-import { getDetailSurah } from "@/utils/api";
-import { IDataSurah } from "@/utils/api.interface";
-import { toArabicNumber } from "@/utils/formatter";
-import { useDataContext } from "@/context/DataArchivedContext";
-import { toast } from "react-toastify";
+import { getDetailSurah } from '@/utils/api';
+import { IDataSurah } from '@/utils/api.interface';
+import { toArabicNumber } from '@/utils/formatter';
+import { useDataContext } from '@/context/DataArchivedContext';
+import { useAyatRefs } from '@/context/AyatRefsContext';
 
 const DetailSurahPage = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
-  const ayat = searchParams.get("ayat");
+  const ayat = searchParams.get('ayat');
+  const { ayatRefs, handleScrollToItem } = useAyatRefs();
 
   const { setData: setDataArchived } = useDataContext(); // Access data and setData from context
 
@@ -28,7 +30,6 @@ const DetailSurahPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const pathname = usePathname();
 
@@ -64,14 +65,6 @@ const DetailSurahPage = () => {
     }
   }, [ayat, data]);
 
-  const handleScrollToItem = (index: number) => {
-    if (itemRefs.current[index]) {
-      itemRefs?.current[index].scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  };
-
   const handlePlaySound = (url: string) => {
     if (audio && isPlaying) {
       setIsPlaying(false);
@@ -95,107 +88,107 @@ const DetailSurahPage = () => {
   if (error) {
     return (
       <>
-        <div className="w-full md:w-4/5 mx-auto">
+        <div className='w-full md:w-4/5 mx-auto'>
           <h2
-            className="text-white text-center mt-5 text-2xl cursor-pointer"
-            onClick={() => router.push("/")}
+            className='text-white text-center mt-5 text-2xl cursor-pointer'
+            onClick={() => router.push('/')}
           >
-            <span className="font-bold">Quran</span>Hub
+            <span className='font-bold'>Quran</span>Hub
           </h2>
         </div>
-        <h2 className="text-center mt-10">Ops! surat tidak ditemukan</h2>
+        <h2 className='text-center mt-10'>Ops! surat tidak ditemukan</h2>
       </>
     );
   }
 
   return (
-    <div className="w-full md:w-4/5 mx-auto">
+    <div className='w-full md:w-4/5 mx-auto'>
       <h2
-        className="text-white text-center mt-5 text-2xl cursor-pointer"
-        onClick={() => router.push("/")}
+        className='text-white text-center mt-5 text-2xl cursor-pointer'
+        onClick={() => router.push('/')}
       >
-        <span className="font-bold">Quran</span>Hub
+        <span className='font-bold'>Quran</span>Hub
       </h2>
 
       {loading && data === undefined ? (
-        <div className="w-full flex justify-center mt-10">
+        <div className='w-full flex justify-center mt-10'>
           <svg
-            className="animate-spin h-7 w-7 mr-3 bg-secondary text-center"
-            viewBox="0 0 24 24"
+            className='animate-spin h-7 w-7 mr-3 bg-secondary text-center'
+            viewBox='0 0 24 24'
           ></svg>
         </div>
       ) : (
         <>
-          <div className="p-3 pb-6 bg-gray-100 w-full mt-10 rounded-t-lg">
-            <div className="flex justify-between items-center">
+          <div className='p-3 pb-6 bg-gray-100 w-full mt-10 rounded-t-lg'>
+            <div className='flex justify-between items-center'>
               <button
-                className="flex items-center gap-1"
+                className='flex items-center gap-1'
                 onClick={() =>
                   router.push(
                     data?.surat_sebelumnya
                       ? `/detail/${data?.surat_sebelumnya?.nomor}`
-                      : "/"
+                      : '/'
                   )
                 }
               >
-                <Icon icon="ep:arrow-left" className="text-primary" />
-                <span className="text-sm italic">
+                <Icon icon='ep:arrow-left' className='text-primary' />
+                <span className='text-sm italic'>
                   {data?.surat_sebelumnya
                     ? data?.surat_sebelumnya.nama_latin
-                    : "Home"}
+                    : 'Home'}
                 </span>
               </button>
               <button
-                className="flex items-center gap-1"
+                className='flex items-center gap-1'
                 onClick={() =>
                   router.push(
                     data?.surat_selanjutnya
                       ? `/detail/${data?.surat_selanjutnya?.nomor}`
-                      : "/"
+                      : '/'
                   )
                 }
               >
-                <span className="text-sm italic">
+                <span className='text-sm italic'>
                   {data?.surat_selanjutnya
                     ? data?.surat_selanjutnya.nama_latin
-                    : "Home"}
+                    : 'Home'}
                 </span>
-                <Icon icon="ep:arrow-right" className="text-primary" />
+                <Icon icon='ep:arrow-right' className='text-primary' />
               </button>
             </div>
-            <div className="flex flex-col items-center">
-              <h2 className="font-medium text-3xl font-amiri">{data?.nama}</h2>
-              <h2 className="text-lg mt-1">
+            <div className='flex flex-col items-center'>
+              <h2 className='font-medium text-3xl font-amiri'>{data?.nama}</h2>
+              <h2 className='text-lg mt-1'>
                 {data?.nama_latin}
-                <span className="font-light italic">{`(${data?.arti})`}</span>
+                <span className='font-light italic'>{`(${data?.arti})`}</span>
               </h2>
             </div>
-            <div className="flex gap-2 items-center justify-center mt-1">
-              <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
-                {data?.tempat_turun === "mekah" ? "Makiyyah" : "Madaniyah"}
+            <div className='flex gap-2 items-center justify-center mt-1'>
+              <p className='p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray'>
+                {data?.tempat_turun === 'mekah' ? 'Makiyyah' : 'Madaniyah'}
               </p>
-              <p className="text-secondary-gray">•</p>
-              <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
+              <p className='text-secondary-gray'>•</p>
+              <p className='p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray'>
                 {data?.jumlah_ayat} Ayat
               </p>
             </div>
 
-            <div className="flex items-center justify-center gap-2 mt-2">
+            <div className='flex items-center justify-center gap-2 mt-2'>
               <div
-                className="flex items-center cursor-pointer text-slate-500 hover:text-primary transition-all"
+                className='flex items-center cursor-pointer text-slate-500 hover:text-primary transition-all'
                 onClick={() => router.push(`/detail/${params.id}/tafsir`)}
               >
                 <Icon
-                  icon="material-symbols-light:info-outline"
-                  className="text-lg"
+                  icon='material-symbols-light:info-outline'
+                  className='text-lg'
                 />
-                <p className="text-sm">Tafsir</p>
+                <p className='text-sm'>Tafsir</p>
               </div>
-              <p className="text-slate-500">|</p>
-              <div className="flex items-center gap-2">
-                <h5 className="text-slate-500 text-sm">Ayat</h5>
+              <p className='text-slate-500'>|</p>
+              <div className='flex items-center gap-2'>
+                <h5 className='text-slate-500 text-sm'>Ayat</h5>
                 <select
-                  className="bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm"
+                  className='bg-gray-100 pl-1 py-1 border-b border-slate-300 w-14 text-slate-500 text-sm'
                   onChange={(e) => handleScrollToItem(Number(e.target.value))}
                 >
                   {data?.ayat.map((item, index) => (
@@ -208,41 +201,41 @@ const DetailSurahPage = () => {
             </div>
           </div>
 
-          <div className="bg-white p-4">
-            <h2 className="text-center text-3xl font-amiri">
+          <div className='bg-white p-4'>
+            <h2 className='text-center text-3xl font-amiri'>
               بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
             </h2>
 
-            <div className="flex items-center gap-1 mt-4">
+            <div className='flex items-center gap-1 mt-4'>
               <div
-                className="p-1 rounded-full border border-slate-300 cursor-pointer"
+                className='p-1 rounded-full border border-slate-300 cursor-pointer'
                 onClick={() => handlePlaySound(data?.audio!)}
               >
                 <Icon
-                  icon={isPlaying ? "bi:pause-fill" : "bi:play-fill"}
-                  className="text-primary text-sm"
+                  icon={isPlaying ? 'bi:pause-fill' : 'bi:play-fill'}
+                  className='text-primary text-sm'
                 />
               </div>
-              <p className="text-sm text-slate-500">Play Surah</p>
+              <p className='text-sm text-slate-500'>Play Surah</p>
             </div>
 
-            <section className="flex flex-col gap-16 mt-7">
+            <section className='flex flex-col gap-16 mt-7'>
               {data?.ayat.map((item, index) => (
                 <div
                   key={item.nomor}
                   ref={(el: never) =>
-                    (itemRefs.current[index] = el) as unknown as never
+                    (ayatRefs.current[index] = el) as unknown as never
                   }
-                  className="scroll-mt-10"
+                  className='scroll-mt-10'
                 >
-                  <div className="flex justify-between gap-3">
+                  <div className='flex justify-between gap-3'>
                     <div>
                       <Icon
-                        icon="stash:save-ribbon-duotone"
-                        className="text-lg text-slate-300 cursor-pointer opacity-60 hover:opacity-100 transition-all"
+                        icon='stash:save-ribbon-duotone'
+                        className='text-lg text-slate-300 cursor-pointer opacity-60 hover:opacity-100 transition-all'
                         onClick={() => {
                           localStorage.setItem(
-                            "archived",
+                            'archived',
                             JSON.stringify({
                               nomor: data.nomor,
                               nama_latin: data.nama_latin,
@@ -262,24 +255,24 @@ const DetailSurahPage = () => {
                         }}
                       />
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
+                    <div className='flex items-center gap-4'>
+                      <div className='relative'>
                         <img
-                          src="../star-small.svg"
-                          alt=""
-                          className="min-w-10 w-10 h-10"
+                          src='../star-small.svg'
+                          alt=''
+                          className='min-w-10 w-10 h-10'
                         />
-                        <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
+                        <h4 className='flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2'>
                           {toArabicNumber(String(item.nomor))}
                         </h4>
                       </div>
-                      <div className="text-end text-3xl font-medium font-amiri leading-loose">
+                      <div className='text-end text-3xl font-medium font-amiri leading-loose'>
                         {item.ar}
                       </div>
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm mt-2">
+                    <p className='text-sm mt-2'>
                       {item.nomor}. {item.idn}
                     </p>
                   </div>

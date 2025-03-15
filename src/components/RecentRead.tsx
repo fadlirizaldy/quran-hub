@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Icon } from '@iconify/react';
 import { IVisible } from './SideContent';
 import { useDataContext } from '@/context/DataArchivedContext';
@@ -20,6 +20,8 @@ interface IFrameSolatProps {
 const RecentRead = ({ isVisible, setIsVisible }: IFrameSolatProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const ayat = searchParams.get('ayat');
 
   const { data, setData } = useDataContext(); // Access data and setData from context
   const [width, setWidth] = useState(1000);
@@ -53,8 +55,7 @@ const RecentRead = ({ isVisible, setIsVisible }: IFrameSolatProps) => {
     }));
 
     if (data && data.nomor >= 1 && data.nomor <= 114) {
-      console.log(pathname.startsWith('/detail'));
-      if (pathname.startsWith('/detail')) {
+      if (pathname.startsWith('/detail') && ayat) {
         router.refresh();
       } else {
         router.push(`/detail/${data.nomor}?ayat=${data.ayat}`);

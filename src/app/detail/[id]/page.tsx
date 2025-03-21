@@ -8,12 +8,13 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
+import { toast } from "react-toastify";
 
 import { getDetailSurah } from "@/utils/api";
 import { IDataSurah } from "@/utils/api.interface";
 import { toArabicNumber } from "@/utils/formatter";
 import { useDataContext } from "@/context/DataArchivedContext";
-import { toast } from "react-toastify";
+import { useAyatRefs } from "@/context/AyatRefsContext";
 
 const DetailSurahPage = () => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const DetailSurahPage = () => {
   const searchParams = useSearchParams();
   const ayat = searchParams.get("ayat");
   console.log("Test commit");
+  const { ayatRefs, handleScrollToItem } = useAyatRefs();
 
   const { setData: setDataArchived } = useDataContext(); // Access data and setData from context
 
@@ -29,7 +31,6 @@ const DetailSurahPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const pathname = usePathname();
 
@@ -64,14 +65,6 @@ const DetailSurahPage = () => {
       }
     }
   }, [ayat, data]);
-
-  const handleScrollToItem = (index: number) => {
-    if (itemRefs.current[index]) {
-      itemRefs?.current[index].scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  };
 
   const handlePlaySound = (url: string) => {
     if (audio && isPlaying) {
@@ -232,7 +225,7 @@ const DetailSurahPage = () => {
                 <div
                   key={item.nomor}
                   ref={(el: never) =>
-                    (itemRefs.current[index] = el) as unknown as never
+                    (ayatRefs.current[index] = el) as unknown as never
                   }
                   className="scroll-mt-10"
                 >

@@ -20,6 +20,7 @@ const DetailSurahPage = () => {
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const ayat = searchParams.get("ayat");
+  console.log("Test commit");
 
   const { setData: setDataArchived } = useDataContext(); // Access data and setData from context
 

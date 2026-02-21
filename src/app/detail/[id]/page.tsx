@@ -233,7 +233,15 @@ const DetailSurahPage = () => {
                     <div>
                       <Icon
                         icon="stash:save-ribbon-duotone"
-                        className="text-lg text-slate-300 cursor-pointer opacity-60 hover:opacity-100 transition-all"
+                        className={`text-lg cursor-pointer opacity-60 hover:opacity-100 transition-all ${
+                          localStorage.getItem("archived") &&
+                          JSON.parse(localStorage.getItem("archived")!)
+                            .nomor === data?.nomor &&
+                          JSON.parse(localStorage.getItem("archived")!).ayat ===
+                            item.nomor
+                            ? "text-primary"
+                            : "text-slate-300"
+                        }`}
                         onClick={() => {
                           localStorage.setItem(
                             "archived",

@@ -57,7 +57,7 @@ const DetailSurahPage = () => {
   useEffect(() => {
     if (ayat && data) {
       const ayatIndex = data.ayat.findIndex(
-        (item) => item.nomor === Number(ayat)
+        (item) => item.nomor === Number(ayat),
       );
       if (ayatIndex !== -1) {
         handleScrollToItem(ayatIndex);
@@ -127,14 +127,14 @@ const DetailSurahPage = () => {
                   router.push(
                     data?.surat_sebelumnya
                       ? `/detail/${data?.surat_sebelumnya?.nomor}`
-                      : "/"
+                      : "/",
                   )
                 }
               >
                 <Icon icon="ep:arrow-left" className="text-primary" />
                 <span className="text-sm italic">
                   {data?.surat_sebelumnya
-                    ? data?.surat_sebelumnya.nama_latin
+                    ? `${data?.surat_sebelumnya.nomor}. ${data?.surat_sebelumnya.nama_latin}`
                     : "Home"}
                 </span>
               </button>
@@ -144,24 +144,25 @@ const DetailSurahPage = () => {
                   router.push(
                     data?.surat_selanjutnya
                       ? `/detail/${data?.surat_selanjutnya?.nomor}`
-                      : "/"
+                      : "/",
                   )
                 }
               >
                 <span className="text-sm italic">
                   {data?.surat_selanjutnya
-                    ? data?.surat_selanjutnya.nama_latin
+                    ? `${data?.surat_selanjutnya.nomor}. ${data?.surat_selanjutnya.nama_latin}`
                     : "Home"}
                 </span>
                 <Icon icon="ep:arrow-right" className="text-primary" />
               </button>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-1">
               <h2 className="font-medium text-3xl font-amiri">{data?.nama}</h2>
-              <h2 className="text-lg mt-1">
-                {data?.nama_latin}
+              <div className="flex items-center gap-1">
+                <p>{data?.nomor}.</p>
+                <h2 className="text-lg">{data?.nama_latin}</h2>
                 <span className="font-light italic">{`(${data?.arti})`}</span>
-              </h2>
+              </div>
             </div>
             <div className="flex gap-2 items-center justify-center mt-1">
               <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
@@ -240,12 +241,12 @@ const DetailSurahPage = () => {
                               nomor: data.nomor,
                               nama_latin: data.nama_latin,
                               ayat: item.nomor,
-                            })
+                            }),
                           );
 
                           toast.info(
                             `Surah ${data.nama_latin} ayat ${item.nomor} tersimpan`,
-                            { autoClose: 2000 }
+                            { autoClose: 2000 },
                           );
                           setDataArchived({
                             nomor: data.nomor,

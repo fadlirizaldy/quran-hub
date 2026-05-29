@@ -59,7 +59,7 @@ const TafsirPage = () => {
                 onClick={() =>
                   router.push(
                     data?.surat_sebelumnya
-                      ? `/detail/${data?.surat_sebelumnya?.nomor}`
+                      ? `/detail/${data?.surat_sebelumnya?.nomor}/tafsir`
                       : "/",
                   )
                 }
@@ -76,7 +76,7 @@ const TafsirPage = () => {
                 onClick={() =>
                   router.push(
                     data?.surat_selanjutnya
-                      ? `/detail/${data?.surat_selanjutnya?.nomor}`
+                      ? `/detail/${data?.surat_selanjutnya?.nomor}/tafsir`
                       : "/",
                   )
                 }

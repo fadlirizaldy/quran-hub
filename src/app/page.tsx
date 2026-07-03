@@ -85,16 +85,16 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-4 px-4">
-        {loading ? (
-          <div className="w-full flex justify-center mt-5">
-            <svg
-              className="animate-spin h-5 w-5 mr-3 bg-secondary text-center"
-              viewBox="0 0 24 24"
-            ></svg>
-          </div>
-        ) : (
-          data
+      {loading ? (
+        <div className="w-full flex justify-center mt-10">
+          <svg
+            className="animate-spin h-5 w-5 mr-3 bg-secondary text-center"
+            viewBox="0 0 24 24"
+          ></svg>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-4 px-4">
+          {data
             ?.filter((item) =>
               item.nama_latin.toLowerCase().includes(searchText.trim()),
             )
@@ -137,9 +137,9 @@ export default function Home() {
                 </div>
                 <p className="text-xl font-amiri">{item.nama}</p>
               </div>
-            ))
-        )}
-      </div>
+            ))}
+        </div>
+      )}
     </MainLayout>
   );
 }

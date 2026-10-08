@@ -31,7 +31,7 @@ const DetailSurahPage = () => {
   const [hasStartedAudio, setHasStartedAudio] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.5);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 

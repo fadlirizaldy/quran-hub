@@ -56,13 +56,13 @@ export default function Home() {
             className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium shadow-sm"
             onClick={() => router.push(`/detail/${18}`)}
           >
-            Alkahfi
+            Al Kahfi
           </div>
           <div
             className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium shadow-sm"
             onClick={() => router.push(`/detail/${56}`)}
           >
-            Alwaqiah
+            Al Waqiah
           </div>
           <div
             className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium shadow-sm"
@@ -72,15 +72,15 @@ export default function Home() {
           </div>
           <div
             className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium shadow-sm"
-            onClick={() => router.push(`/detail/${2}`)}
+            onClick={() => router.push(`/detail/${67}`)}
           >
-            Albaqarah
+            Al Mulk
           </div>
           <div
             className="cursor-pointer hover:shadow-md bg-tertiary rounded-3xl py-2 px-3 text-txt-yellow font-medium shadow-sm"
-            onClick={() => router.push(`/detail/${50}`)}
+            onClick={() => router.push(`/detail/${55}`)}
           >
-            Qaf
+            Ar Rahman
           </div>
         </div>
       </div>

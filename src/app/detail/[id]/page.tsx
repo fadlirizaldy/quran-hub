@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import {
   useParams,
@@ -8,14 +8,12 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
-import { toast } from "react-toastify";
 
 import { getDetailSurah } from "@/utils/api";
 import { IDataSurah } from "@/utils/api.interface";
-import { toArabicNumber } from "@/utils/formatter";
-import { useDataContext } from "@/context/DataArchivedContext";
 import { useAyatRefs } from "@/context/AyatRefsContext";
 import AudioPlayer from "@/components/AudioPlayer";
+import AyatSection from "@/components/AyatSection";
 
 const DetailSurahPage = () => {
   const router = useRouter();
@@ -23,8 +21,6 @@ const DetailSurahPage = () => {
   const searchParams = useSearchParams();
   const ayat = searchParams.get("ayat");
   const { ayatRefs, handleScrollToItem } = useAyatRefs();
-
-  const { setData: setDataArchived } = useDataContext(); // Access data and setData from context
 
   const [data, setData] = useState<IDataSurah>();
 
@@ -189,74 +185,7 @@ const DetailSurahPage = () => {
 
             <AudioPlayer data={data} />
 
-            <section className="flex flex-col gap-16 mt-7">
-              {data?.ayat.map((item, index) => (
-                <div
-                  key={item.nomorAyat}
-                  ref={(el: never) =>
-                    (ayatRefs.current[index] = el) as unknown as never
-                  }
-                  className="scroll-mt-10"
-                >
-                  <div className="flex justify-between gap-3">
-                    <div>
-                      <Icon
-                        icon="stash:save-ribbon-duotone"
-                        className={`text-lg cursor-pointer opacity-60 hover:opacity-100 transition-all ${
-                          localStorage.getItem("archived") &&
-                          JSON.parse(localStorage.getItem("archived")!)
-                            .nomor === data?.nomor &&
-                          JSON.parse(localStorage.getItem("archived")!).ayat ===
-                            item.nomorAyat
-                            ? "text-primary"
-                            : "text-slate-300"
-                        }`}
-                        onClick={() => {
-                          localStorage.setItem(
-                            "archived",
-                            JSON.stringify({
-                              nomor: data.nomor,
-                              namaLatin: data.namaLatin,
-                              ayat: item.nomorAyat,
-                            }),
-                          );
-
-                          toast.info(
-                            `Surah ${data.namaLatin} ayat ${item.nomorAyat} tersimpan`,
-                            { autoClose: 2000 },
-                          );
-                          setDataArchived({
-                            nomor: data.nomor,
-                            namaLatin: data.namaLatin,
-                            ayat: item.nomorAyat,
-                          });
-                        }}
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        <img
-                          src="../star-small.svg"
-                          alt=""
-                          className="min-w-10 w-10 h-10"
-                        />
-                        <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
-                          {toArabicNumber(String(item.nomorAyat))}
-                        </h4>
-                      </div>
-                      <div className="text-end text-3xl font-medium font-amiri leading-[2.2]">
-                        {item.teksArab}
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm mt-2">
-                      {item.nomorAyat}. {item.teksIndonesia}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </section>
+            <AyatSection data={data} ayatRefs={ayatRefs} />
           </div>
         </>
       )}

@@ -6,6 +6,7 @@ import "./globals.css";
 import { DataProvider } from "@/context/DataArchivedContext";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingLayout from "./loading";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <ToastContainer />
           <Suspense fallback={<LoadingLayout />}>{children}</Suspense>
         </DataProvider>
+        <Analytics />
       </body>
     </html>
   );

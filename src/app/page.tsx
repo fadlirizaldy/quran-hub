@@ -96,7 +96,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-4 px-4">
           {data
             ?.filter((item) =>
-              item.nama_latin.toLowerCase().includes(searchText.trim()),
+              item.namaLatin.toLowerCase().includes(searchText.trim()),
             )
             .map((item) => (
               <div
@@ -119,18 +119,18 @@ export default function Home() {
                   </div>
                   <div className="flex flex-col">
                     <h3 className="text-sm">
-                      {item.nama_latin}{" "}
+                      {item.namaLatin}{" "}
                       <span className="text-secondary-text italic">{`(${item.arti})`}</span>
                     </h3>
                     <div className="flex gap-2 items-center">
                       <p className="p-1 text-xs rounded-md bg-primary-gray text-secondary-gray">
-                        {item.tempat_turun === "mekah"
+                        {item.tempatTurun === "mekah"
                           ? "Makiyyah"
                           : "Madaniyah"}
                       </p>
                       <p className="text-secondary-gray">•</p>
                       <p className="p-1 text-xs rounded-md bg-primary-gray text-secondary-gray">
-                        {item.jumlah_ayat} Ayat
+                        {item.jumlahAyat} Ayat
                       </p>
                     </div>
                   </div>

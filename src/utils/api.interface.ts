@@ -1,55 +1,61 @@
+export interface IApiResponse<T> {
+  code: number;
+  message: string;
+  data: T;
+}
+
 export interface IDataSurah {
   nomor: number;
   nama: string;
-  nama_latin: string;
-  jumlah_ayat: number;
-  tempat_turun: string;
+  namaLatin: string;
+  jumlahAyat: number;
+  tempatTurun: string;
   arti: string;
   deskripsi: string;
   audio: string;
+  audioFull: Record<string, string>;
   status: boolean;
   ayat: Ayat[];
-  surat_selanjutnya: INextPrevSurah;
-  surat_sebelumnya: INextPrevSurah;
+  suratSelanjutnya: INextPrevSurah;
+  suratSebelumnya: INextPrevSurah;
 }
 
 export interface IDataTafsir {
   nomor: number;
   nama: string;
-  nama_latin: string;
-  jumlah_ayat: number;
-  tempat_turun: string;
+  namaLatin: string;
+  jumlahAyat: number;
+  tempatTurun: string;
   arti: string;
   deskripsi: string;
-  audioFull: string;
+  audioFull: Record<string, string>;
   tafsir: Tafsir[];
-  surat_selanjutnya: INextPrevSurah;
-  surat_sebelumnya: INextPrevSurah;
+  suratSelanjutnya: INextPrevSurah;
+  suratSebelumnya: INextPrevSurah;
 }
 
 export interface Ayat {
   id: number;
   surah: number;
-  nomor: number;
-  ar: string;
-  tr: string;
-  idn: string;
+  nomorAyat: number;
+  teksArab: string;
+  teksLatin: string;
+  teksIndonesia: string;
+  audio: Record<string, string>;
 }
 
 export interface Tafsir {
-  id: number;
-  surah: number;
   ayat: number;
-  tafsir: string;
+  teks: string;
 }
 
 export interface INextPrevSurah {
   id: number;
   nomor: number;
   nama: string;
-  nama_latin: string;
-  jumlah_ayat: number;
-  tempat_turun: string;
+  namaLatin: string;
+  jumlahAyat: number;
+  tempatTurun: string;
   arti: string;
   deskripsi: string;
   audio: string;

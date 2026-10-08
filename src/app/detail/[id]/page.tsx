@@ -57,7 +57,7 @@ const DetailSurahPage = () => {
   useEffect(() => {
     if (ayat && data) {
       const ayatIndex = data.ayat.findIndex(
-        (item) => item.nomor === Number(ayat),
+        (item) => item.nomorAyat === Number(ayat),
       );
       if (ayatIndex !== -1) {
         handleScrollToItem(ayatIndex);
@@ -125,16 +125,16 @@ const DetailSurahPage = () => {
                 className="flex items-center gap-1"
                 onClick={() =>
                   router.push(
-                    data?.surat_sebelumnya
-                      ? `/detail/${data?.surat_sebelumnya?.nomor}`
+                    data?.suratSebelumnya
+                      ? `/detail/${data?.suratSebelumnya?.nomor}`
                       : "/",
                   )
                 }
               >
                 <Icon icon="ep:arrow-left" className="text-primary" />
                 <span className="text-sm italic">
-                  {data?.surat_sebelumnya
-                    ? `${data?.surat_sebelumnya.nomor}. ${data?.surat_sebelumnya.nama_latin}`
+                  {data?.suratSebelumnya
+                    ? `${data?.suratSebelumnya.nomor}. ${data?.suratSebelumnya.namaLatin}`
                     : "Home"}
                 </span>
               </button>
@@ -142,15 +142,15 @@ const DetailSurahPage = () => {
                 className="flex items-center gap-1"
                 onClick={() =>
                   router.push(
-                    data?.surat_selanjutnya
-                      ? `/detail/${data?.surat_selanjutnya?.nomor}`
+                    data?.suratSelanjutnya
+                      ? `/detail/${data?.suratSelanjutnya?.nomor}`
                       : "/",
                   )
                 }
               >
                 <span className="text-sm italic">
-                  {data?.surat_selanjutnya
-                    ? `${data?.surat_selanjutnya.nomor}. ${data?.surat_selanjutnya.nama_latin}`
+                  {data?.suratSelanjutnya
+                    ? `${data?.suratSelanjutnya.nomor}. ${data?.suratSelanjutnya.namaLatin}`
                     : "Home"}
                 </span>
                 <Icon icon="ep:arrow-right" className="text-primary" />
@@ -160,17 +160,17 @@ const DetailSurahPage = () => {
               <h2 className="font-medium text-3xl font-amiri">{data?.nama}</h2>
               <div className="flex items-center gap-1">
                 <p>{data?.nomor}.</p>
-                <h2 className="text-lg">{data?.nama_latin}</h2>
+                <h2 className="text-lg">{data?.namaLatin}</h2>
                 <span className="font-light italic">{`(${data?.arti})`}</span>
               </div>
             </div>
             <div className="flex gap-2 items-center justify-center mt-1">
               <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
-                {data?.tempat_turun === "mekah" ? "Makiyyah" : "Madaniyah"}
+                {data?.tempatTurun === "mekah" ? "Makiyyah" : "Madaniyah"}
               </p>
               <p className="text-secondary-gray">•</p>
               <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
-                {data?.jumlah_ayat} Ayat
+                {data?.jumlahAyat} Ayat
               </p>
             </div>
 
@@ -193,8 +193,8 @@ const DetailSurahPage = () => {
                   onChange={(e) => handleScrollToItem(Number(e.target.value))}
                 >
                   {data?.ayat.map((item, index) => (
-                    <option key={item.nomor} value={index}>
-                      {item.nomor}
+                    <option key={item.nomorAyat} value={index}>
+                      {item.nomorAyat}
                     </option>
                   ))}
                 </select>
@@ -210,7 +210,7 @@ const DetailSurahPage = () => {
             <div className="flex items-center gap-1 mt-4">
               <div
                 className="p-1 rounded-full border border-slate-300 cursor-pointer"
-                onClick={() => handlePlaySound(data?.audio!)}
+                onClick={() => handlePlaySound(data?.audioFull["01"]!)}
               >
                 <Icon
                   icon={isPlaying ? "bi:pause-fill" : "bi:play-fill"}
@@ -223,7 +223,7 @@ const DetailSurahPage = () => {
             <section className="flex flex-col gap-16 mt-7">
               {data?.ayat.map((item, index) => (
                 <div
-                  key={item.nomor}
+                  key={item.nomorAyat}
                   ref={(el: never) =>
                     (ayatRefs.current[index] = el) as unknown as never
                   }
@@ -238,7 +238,7 @@ const DetailSurahPage = () => {
                           JSON.parse(localStorage.getItem("archived")!)
                             .nomor === data?.nomor &&
                           JSON.parse(localStorage.getItem("archived")!).ayat ===
-                            item.nomor
+                            item.nomorAyat
                             ? "text-primary"
                             : "text-slate-300"
                         }`}
@@ -247,19 +247,19 @@ const DetailSurahPage = () => {
                             "archived",
                             JSON.stringify({
                               nomor: data.nomor,
-                              nama_latin: data.nama_latin,
-                              ayat: item.nomor,
+                              namaLatin: data.namaLatin,
+                              ayat: item.nomorAyat,
                             }),
                           );
 
                           toast.info(
-                            `Surah ${data.nama_latin} ayat ${item.nomor} tersimpan`,
+                            `Surah ${data.namaLatin} ayat ${item.nomorAyat} tersimpan`,
                             { autoClose: 2000 },
                           );
                           setDataArchived({
                             nomor: data.nomor,
-                            nama_latin: data.nama_latin,
-                            ayat: item.nomor,
+                            namaLatin: data.namaLatin,
+                            ayat: item.nomorAyat,
                           });
                         }}
                       />
@@ -272,17 +272,17 @@ const DetailSurahPage = () => {
                           className="min-w-10 w-10 h-10"
                         />
                         <h4 className="flex items-center text-lg absolute left-1/2 top-2 transform -translate-x-1/2">
-                          {toArabicNumber(String(item.nomor))}
+                          {toArabicNumber(String(item.nomorAyat))}
                         </h4>
                       </div>
                       <div className="text-end text-3xl font-medium font-amiri leading-[2.2]">
-                        {item.ar}
+                        {item.teksArab}
                       </div>
                     </div>
                   </div>
                   <div>
                     <p className="text-sm mt-2">
-                      {item.nomor}. {item.idn}
+                      {item.nomorAyat}. {item.teksIndonesia}
                     </p>
                   </div>
                 </div>

@@ -58,16 +58,16 @@ const TafsirPage = () => {
                 className="flex items-center gap-1"
                 onClick={() =>
                   router.push(
-                    data?.surat_sebelumnya
-                      ? `/detail/${data?.surat_sebelumnya?.nomor}/tafsir`
+                    data?.suratSebelumnya
+                      ? `/detail/${data?.suratSebelumnya?.nomor}/tafsir`
                       : "/",
                   )
                 }
               >
                 <Icon icon="ep:arrow-left" className="text-primary" />
                 <span className="text-sm italic">
-                  {data?.surat_sebelumnya
-                    ? `${data?.surat_sebelumnya.nomor}. ${data?.surat_sebelumnya.nama_latin}`
+                  {data?.suratSebelumnya
+                    ? `${data?.suratSebelumnya.nomor}. ${data?.suratSebelumnya.namaLatin}`
                     : "Home"}
                 </span>
               </button>
@@ -75,15 +75,15 @@ const TafsirPage = () => {
                 className="flex items-center gap-1"
                 onClick={() =>
                   router.push(
-                    data?.surat_selanjutnya
-                      ? `/detail/${data?.surat_selanjutnya?.nomor}/tafsir`
+                    data?.suratSelanjutnya
+                      ? `/detail/${data?.suratSelanjutnya?.nomor}/tafsir`
                       : "/",
                   )
                 }
               >
                 <span className="text-sm italic">
-                  {data?.surat_selanjutnya
-                    ? `${data?.surat_selanjutnya.nomor}. ${data?.surat_selanjutnya.nama_latin}`
+                  {data?.suratSelanjutnya
+                    ? `${data?.suratSelanjutnya.nomor}. ${data?.suratSelanjutnya.namaLatin}`
                     : "Home"}
                 </span>
                 <Icon icon="ep:arrow-right" className="text-primary" />
@@ -93,17 +93,17 @@ const TafsirPage = () => {
               <h2 className="font-medium text-3xl font-amiri">{data?.nama}</h2>
               <div className="flex items-center gap-1">
                 <p>{data?.nomor}.</p>
-                <h2 className="text-lg">{data?.nama_latin}</h2>
+                <h2 className="text-lg">{data?.namaLatin}</h2>
                 <span className="font-light italic">{`(${data?.arti})`}</span>
               </div>
             </div>
             <div className="flex gap-2 items-center justify-center mt-1">
               <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
-                {data?.tempat_turun === "mekah" ? "Makiyyah" : "Madaniyah"}
+                {data?.tempatTurun === "mekah" ? "Makiyyah" : "Madaniyah"}
               </p>
               <p className="text-secondary-gray">•</p>
               <p className="p-1 bg-gray-100 text-xs rounded-md border border-secondary-gray text-secondary-gray">
-                {data?.jumlah_ayat} Ayat
+                {data?.jumlahAyat} Ayat
               </p>
             </div>
 
@@ -157,7 +157,7 @@ const TafsirPage = () => {
                         {toArabicNumber(String(item.ayat))}
                       </h4>
                     </div>
-                    <div className="text-sm text-slate-500">{item.tafsir}</div>
+                    <div className="text-sm text-slate-500">{item.teks}</div>
                   </div>
                 </div>
               ))}

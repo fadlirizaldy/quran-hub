@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import BackToTop from "./BackToTop";
-import IFrameSolat from "./IFrameSolat";
 import Footer from "./Footer";
-import RecentRead from "./RecentRead";
 import SideContent from "./SideContent";
 
 interface IPropsLayout {
